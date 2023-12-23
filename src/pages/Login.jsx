@@ -1,4 +1,4 @@
-import logoImage from "../assets/images/lws-logo-light.svg";
+import logoImage from "/logo.gif";
 import Error from "../components/ui/Error";
 
 import { Link, useNavigate } from "react-router-dom";
