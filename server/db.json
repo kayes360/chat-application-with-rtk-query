@@ -29,31 +29,7 @@
       "password": "$2a$10$XLeVN2O8Ocm1i6l0x2ycz.3R4YYwTk.9nvqrBVIqxEsC1rjBQLRk2",
       "name": "b",
       "id": 5
-    },
-    {
-      "email": "vycunu@mailinator.com",
-      "password": "$2a$10$bqZeasO04WmaR5/4YZcLjO2uMUEcLq6t4IxMl9QXUS0fY5uMtth0m",
-      "name": "Nero Hunt",
-      "id": 6
-    },
-    {
-      "email": "lajazix@mailinator.com",
-      "password": "$2a$10$vvkQWstHeapOwB4t0Wu4k.tyBWJRRS0LVEjV4qu3DAzaBNtOYCqCe",
-      "name": "Raphael Melton",
-      "id": 7
-    },
-    {
-      "email": "lyjemyfy@mailinator.com",
-      "password": "$2a$10$GBOu0p2aczvi/zbFuJfv7uKDkv5AnhGfKO1dQCNhfoMU2RUC2ngNm",
-      "name": "Yasir Jackson",
-      "id": 8
-    },
-    {
-      "email": "wybipesas@mailinator.com",
-      "password": "$2a$10$JrmABJd0FsZm6G2JuL2ULuQ1WKwCNyhmFP1y7nr1gkZgghz8uUciG",
-      "name": "Yvette Dale",
-      "id": 9
-    }
+    } 
   ],
   "conversations": [
     {
@@ -84,13 +60,49 @@
           "id": 1
         },
         {
-          "email": "akash@learnwithsumit.com",
+          "email": "saad@learnwithsumit.com",
           "name": "Saad Hasan",
           "id": 3
         }
       ],
       "message": "How are you?",
       "timestamp": 1661976143678
+    },
+    {
+      "id": 3,
+      "participants": "a@a.com-b@b.com",
+      "users": [
+        {
+          "email": "a@a.com",
+          "name": "a",
+          "id": 4
+        },
+        {
+          "email": "b@b.com",
+          "name": "b",
+          "id": 5
+        }
+      ],
+      "message": "Hey there!",
+      "timestamp": 1661976144000
+    },
+    {
+      "id": 4,
+      "participants": "a@a.com-b@b.com",
+      "users": [
+        {
+          "email": "a@a.com",
+          "name": "a",
+          "id": 4
+        },
+        {
+          "email": "b@b.com",
+          "name": "b",
+          "id": 5
+        }
+      ],
+      "message": "How's it going?",
+      "timestamp": 1661976144200
     }
   ],
   "messages": [
@@ -125,6 +137,38 @@
       },
       "message": "How are you?",
       "timestamp": 1661976143678
+    },
+    {
+      "id": 3,
+      "conversationId": 3,
+      "sender": {
+        "email": "a@a.com",
+        "name": "a",
+        "id": 4
+      },
+      "receiver": {
+        "email": "b@b.com",
+        "name": "b",
+        "id": 5
+      },
+      "message": "Hey there!",
+      "timestamp": 1661976144000
+    },
+    {
+      "id": 4,
+      "conversationId": 3,
+      "sender": {
+        "email": "b@b.com",
+        "name": "b",
+        "id": 5
+      },
+      "receiver": {
+        "email": "a@a.com",
+        "name": "a",
+        "id": 4
+      },
+      "message": "How's it going?",
+      "timestamp": 1661976144200
     }
   ]
 }

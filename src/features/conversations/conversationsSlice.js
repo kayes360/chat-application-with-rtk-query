@@ -4,7 +4,7 @@ const initialState = {
 
 }
 
-const authSlice = createSlice({
+const conversationsSlice = createSlice({
     name: 'conversations',
     initialState,
     reducers: {
@@ -13,5 +13,5 @@ const authSlice = createSlice({
 });
 
 
-export const {} = conversations.actions;
-export default conversations.reducer
+export const {} = conversationsSlice.actions;
+export default conversationsSlice.reducer
