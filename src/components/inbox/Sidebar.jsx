@@ -1,22 +1,24 @@
 import { useState } from "react";
-import ChatItems from "./ChatIItems";
+import ChatItems from "./ChatItems.jsx";
 import Modal from "./Modal";
 // import Blank from "./Blank";
 
 export default function Sidebar() {
   const [opened, setOpened] = useState(false);
-
   const controlModal = () => {
     setOpened((prevState) => !prevState);
   };
 
   return (
     <div className="w-[100px] border-r border-t-0 border-gray-300 lg:col-span-1 md:w-full">
-      <div className="h-[65px] text-center text-grey-500 p-4 border-b border-gray-300 flex md:justify-end justify-center">
+      <div
+        className="h-[65px] text-center text-grey-500 p-4 border-b border-gray-300 flex md:justify-end justify-center gap-3  cursor-pointer  "
+        onClick={controlModal}
+      >
+        <p className=" hover:text-blue-900">Send New Message</p>
         <svg
           viewBox="0 0 194.436 194.436"
-          className="w-5 h-5 text-grey-500 cursor-pointer"
-          onClick={controlModal}
+          className="w-5 h-5 text-grey-500 cursor-pointer hover:text-blue-900"
         >
           <path
             d="M192.238,34.545L159.894,2.197C158.487,0.79,156.579,0,154.59,0c-1.989,0-3.897,0.79-5.303,2.196l-32.35,32.35

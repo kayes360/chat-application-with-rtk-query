@@ -4,31 +4,26 @@ import { userLoggedOut } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 
 export default function Navigation() {
-    const dispatch = useDispatch() 
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(userLoggedOut());
+    localStorage.clear();
+  };
 
-    const logout = () => { 
-        dispatch(userLoggedOut())
-        localStorage.clear()
-     }
-
-    return (
-        <nav className="border-general sticky top-0 z-40 border-b bg-violet-700 transition-colors">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between h-16 items-center">
-                    <Link to="/">
-                        <img
-                            className="h-10"
-                            src={logoImage}
-                            alt="Learn with Sumit"
-                        />
-                    </Link>
-                    <ul>
-                        <li className="text-white cursor-pointer" onClick={logout}>
-                            <span>Logout</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
+  return (
+    <nav className="border-general sticky top-0 z-40 border-b bg-violet-700 transition-colors">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between h-16 items-center">
+          <Link to="/">
+            <img className="h-10" src={logoImage} alt="Learn with Sumit" />
+          </Link>
+          <ul>
+            <li className="text-white cursor-pointer" onClick={logout}>
+              <span>Logout</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 }
