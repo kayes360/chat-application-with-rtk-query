@@ -3,59 +3,100 @@ import isValdEmail from "../../utils/isValidEmail";
 import { useGetUserQuery } from "../../features/users/userApi";
 import Error from "../ui/Error";
 import { useDispatch, useSelector } from "react-redux";
-import { conversationsApi } from "../../features/conversations/conversationsApi";
+import {
+  conversationsApi,
+  useAddConversationMutation,
+  useEditConversationMutation,
+} from "../../features/conversations/conversationsApi";
 import isValidEmail from "../../utils/isValidEmail";
 
 export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
-  const [userCheck, setUserCheck] = useState("")
-  const [conversation, setConversation] = useState(undefined)
-const dispatch = useDispatch();
-const [responseError, setResponseError] = useState("")
-  const {user: loggedInUser} = useSelector(state=> state.auth) || {};
-  const {email: loggedInUserEmail} = loggedInUser || {};
-  
-  const {data: participant}= useGetUserQuery(to,{
-    skip: !userCheck
-  })
+  const [userCheck, setUserCheck] = useState("");
+  const [conversation, setConversation] = useState(undefined);
+  const dispatch = useDispatch();
+  const [responseError, setResponseError] = useState("");
+  const { user: loggedInUser } = useSelector((state) => state.auth) || {};
+  const { email: loggedInUserEmail } = loggedInUser || {};
+
+  const { data: participant } = useGetUserQuery(to, {
+    skip: !userCheck,
+  });
+
+  const [addConversation, { isSuccess: isAddConversationSuccess }] =
+    useAddConversationMutation();
+  const [editConversation, { isSuccess: isEditConversationSuccess }] =
+    useEditConversationMutation();
+
   useEffect(() => {
-     if (participant?.length > 0 && participant[0].email !== loggedInUserEmail) {
-     
-      dispatch(conversationsApi.endpoints.getConversation.initiate({
-        userEmail: loggedInUserEmail,
-        participantEmail: to
-      })).unwrap().then((data) => { 
-          console.log("data",data)
-          setConversation(data)
-       }).catch( err => {
-        setResponseError("There was a problem")
-      })
+    if (participant?.length > 0 && participant[0].email !== loggedInUserEmail) {
+      dispatch(
+        conversationsApi.endpoints.getConversation.initiate({
+          userEmail: loggedInUserEmail,
+          participantEmail: to,
+        })
+      )
+        .unwrap()
+        .then((data) => {
+          console.log("data", data);
+          setConversation(data);
+        })
+        .catch((err) => {
+          setResponseError("There was a problem");
+        });
+    }
+  }, [participant, dispatch, loggedInUserEmail, to]);
+
+  useEffect(() => {
+     if (isAddConversationSuccess || isEditConversationSuccess) {
+      control()
      }
-  }, [participant, dispatch, loggedInUserEmail, to])
+  }, [isAddConversationSuccess, isEditConversationSuccess])
   
+
 
   const debounceHandler = (fn, delay) => {
     let timeoutId;
     return (...args) => {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         fn(...args);
       }, delay);
     };
   };
 
-  const doSearch =(value) => { 
-    if (isValidEmail(value)) { 
-      setUserCheck(true)
-      setTo(value)
+  const doSearch = (value) => {
+    if (isValidEmail(value)) {
+      setUserCheck(true);
+      setTo(value);
     }
-   }
-   const handleSearch = debounceHandler(doSearch, 500)
-   const handleSubmit = (e) => { 
-      e.preventDefault()
-      console.log("submitted")
+  };
+  const handleSearch = debounceHandler(doSearch, 500);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    if (conversation?.length > 0) {
+      //edit transaction
+      editConversation({
+        id: conversation[0].id,
+        data: {
+          participants: `${loggedInUserEmail}-${participant[0].email}`,
+          users: [loggedInUserEmail, participant[0]],
+          message,
+          timestamp: new Date().getTime(),
+        },
+      });
+    } else if (conversation?.length === 0) {
+      //add transaction
+      addConversation({
+        participants: `${loggedInUserEmail}-${participant[0].email}`,
+        users: [loggedInUserEmail, participant[0]],
+        message,
+        timestamp: new Date().getTime(),
+      });
     }
+  };
   return (
     open && (
       <>
@@ -67,10 +108,7 @@ const [responseError, setResponseError] = useState("")
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Send message
           </h2>
-          <form
-            className="mt-8 space-y-6"
-            onSubmit={handleSubmit} 
-          >
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="to" className="sr-only">
@@ -123,22 +161,15 @@ const [responseError, setResponseError] = useState("")
               >
                 Send Message
               </button>
-              {/* <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 cursor-pointer"
-                 
-              >
-                Send Message
-              </button> */}
             </div>
 
             {participant?.length === 0 && (
               <Error message="This user does not exist" />
             )}
-              {participant?.length > 0 &&
+            {participant?.length > 0 &&
               participant[0].email === loggedInUserEmail && (
                 <Error message="You can not send message to yourself" />
-              )} 
+              )}
             {responseError && <Error message={responseError} />}
           </form>
         </div>

@@ -29,7 +29,13 @@
       "password": "$2a$10$XLeVN2O8Ocm1i6l0x2ycz.3R4YYwTk.9nvqrBVIqxEsC1rjBQLRk2",
       "name": "b",
       "id": 5
-    } 
+    },
+    {
+      "email": "c@c.com",
+      "password": "$2a$10$iVxKrSMMKsCW9DyuxLBIrOpYtgwJvjkW51SnPQunnUykR/jqKWipK",
+      "name": "Eaton Washington",
+      "id": 6
+    }
   ],
   "conversations": [
     {
@@ -70,21 +76,33 @@
     },
     {
       "id": 3,
-      "participants": "a@a.com-b@b.com",
+      "participants": "b@b.com-a@a.com",
       "users": [
+        "b@b.com",
         {
           "email": "a@a.com",
+          "password": "$2a$10$7rJgm.zJ31gCbqWOWNEj1.9MTlrMm8mYKoisrk408.EaZyFfVNoWO",
           "name": "a",
           "id": 4
-        },
-        {
-          "email": "b@b.com",
-          "name": "b",
-          "id": 5
         }
       ],
-      "message": "Hey there!",
-      "timestamp": 1661976144000
+      "message": "hello a",
+      "timestamp": 1704140315031
+    },
+    {
+      "participants": "b@b.com-c@c.com",
+      "users": [
+        "b@b.com",
+        {
+          "email": "c@c.com",
+          "password": "$2a$10$iVxKrSMMKsCW9DyuxLBIrOpYtgwJvjkW51SnPQunnUykR/jqKWipK",
+          "name": "Eaton Washington",
+          "id": 6
+        }
+      ],
+      "message": "new msg",
+      "timestamp": 1704140653102,
+      "id": 4
     }
   ],
   "messages": [
@@ -120,8 +138,6 @@
       "message": "How are you?",
       "timestamp": 1661976143678
     },
-
-
     {
       "id": 3,
       "conversationId": 3,
@@ -154,7 +170,5 @@
       "message": "How's it going?",
       "timestamp": 1661976144200
     }
-
-    
   ]
 }
