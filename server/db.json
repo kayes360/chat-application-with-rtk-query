@@ -85,24 +85,6 @@
       ],
       "message": "Hey there!",
       "timestamp": 1661976144000
-    },
-    {
-      "id": 4,
-      "participants": "a@a.com-b@b.com",
-      "users": [
-        {
-          "email": "a@a.com",
-          "name": "a",
-          "id": 4
-        },
-        {
-          "email": "b@b.com",
-          "name": "b",
-          "id": 5
-        }
-      ],
-      "message": "How's it going?",
-      "timestamp": 1661976144200
     }
   ],
   "messages": [

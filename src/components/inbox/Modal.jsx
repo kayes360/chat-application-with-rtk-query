@@ -1,69 +1,39 @@
 import { useEffect, useState } from "react";
-import isValdEmail from "../../utils/isValdEmail";
+import isValdEmail from "../../utils/isValidEmail";
 import { useGetUserQuery } from "../../features/users/userApi";
 import Error from "../ui/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { conversationsApi } from "../../features/conversations/conversationsApi";
+import isValidEmail from "../../utils/isValidEmail";
+
 export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
-  const [userCheck, setUserCheck] = useState(false);
-  const [responseError, setResponseError] = useState("");
-  const [conversation, setConversation] = useState(undefined);
+  const [userCheck, setUserCheck] = useState("")
 
-  const { user: loggedInUser } = useSelector((state) => state.auth) || {};
-  const { email: loggedInUserEmail } = loggedInUser || {};
-  const {
-    data: participant,
-    isLoading,
-    error,
-  } = useGetUserQuery(to, {
-    skip: !userCheck,
-  });
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (participant?.length > 0 && participant[0].email !== loggedInUserEmail) {
-      //check if conversation exits or not
-      dispatch(
-        conversationsApi.endpoints.getConversation.initiate({
-          userEmail: loggedInUserEmail,
-          participantEmail: to,
-        })
-      )
-        .unwrap()
-        .then((data) => {
-          console.log(data);
-          setConversation(data);
-        })
-        .catch((err) => {
-          setResponseError("There was a problem");
-        });
-    }
-  }, [participant, dispatch, loggedInUser, to]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("handleSubmit");
-  };
+  // const {} = useSelector(state=> state.auth)
+  
+  const {data: participant}= useGetUserQuery(to,{
+    skip: !userCheck
+  })
 
   const debounceHandler = (fn, delay) => {
-    let timeOutId;
+    let timeoutId;
     return (...args) => {
-      clearTimeout(timeOutId);
-      timeOutId = setTimeout(() => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
         fn(...args);
       }, delay);
     };
   };
-  const doSearch = (value) => {
-    if (isValdEmail(value)) {
-      setUserCheck(true);
-      setTo(value);
-    }
-  };
-  const handleSearch = debounceHandler(doSearch, 500);
 
+  const doSearch =(value) => { 
+    if (isValidEmail(value)) { 
+      setUserCheck(true)
+      setTo(value)
+    }
+   }
+   const handleSearch = debounceHandler(doSearch, 500)
   return (
     open && (
       <>
@@ -78,8 +48,7 @@ export default function Modal({ open, control }) {
           <form
             className="mt-8 space-y-6"
             action="#"
-            method="POST"
-            onSubmit={handleSubmit}
+            method="POST" 
           >
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -116,7 +85,7 @@ export default function Modal({ open, control }) {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="submit"
                 className={`${
                   conversation === undefined ||
@@ -132,17 +101,24 @@ export default function Modal({ open, control }) {
                 }
               >
                 Send Message
+              </button> */}
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 cursor-pointer"
+                 
+              >
+                Send Message
               </button>
             </div>
 
             {participant?.length === 0 && (
               <Error message="This user does not exist" />
             )}
-            {participant?.length > 0 &&
+            {/* {participant?.length > 0 &&
               participant[0].email === loggedInUserEmail && (
                 <Error message="You can not send message to yourself" />
-              )}
-            {responseError && <Error message={responseError} />}
+              )} */}
+            {/* {responseError && <Error message={responseError} />} */}
           </form>
         </div>
       </>
