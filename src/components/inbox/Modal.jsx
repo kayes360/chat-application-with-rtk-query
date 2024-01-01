@@ -10,12 +10,30 @@ export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const [userCheck, setUserCheck] = useState("")
-
-  // const {} = useSelector(state=> state.auth)
+  const [conversation, setConversation] = useState(undefined)
+const dispatch = useDispatch();
+const [responseError, setResponseError] = useState("")
+  const {user: loggedInUser} = useSelector(state=> state.auth) || {};
+  const {email: loggedInUserEmail} = loggedInUser || {};
   
   const {data: participant}= useGetUserQuery(to,{
     skip: !userCheck
   })
+  useEffect(() => {
+     if (participant?.length > 0 && participant[0].email !== loggedInUserEmail) {
+     
+      dispatch(conversationsApi.endpoints.getConversation.initiate({
+        userEmail: loggedInUserEmail,
+        participantEmail: to
+      })).unwrap().then((data) => { 
+          console.log("data",data)
+          setConversation(data)
+       }).catch( err => {
+        setResponseError("There was a problem")
+      })
+     }
+  }, [participant, dispatch, loggedInUserEmail, to])
+  
 
   const debounceHandler = (fn, delay) => {
     let timeoutId;
@@ -34,6 +52,10 @@ export default function Modal({ open, control }) {
     }
    }
    const handleSearch = debounceHandler(doSearch, 500)
+   const handleSubmit = (e) => { 
+      e.preventDefault()
+      console.log("submitted")
+    }
   return (
     open && (
       <>
@@ -47,8 +69,7 @@ export default function Modal({ open, control }) {
           </h2>
           <form
             className="mt-8 space-y-6"
-            action="#"
-            method="POST" 
+            onSubmit={handleSubmit} 
           >
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -85,7 +106,7 @@ export default function Modal({ open, control }) {
             </div>
 
             <div>
-              {/* <button
+              <button
                 type="submit"
                 className={`${
                   conversation === undefined ||
@@ -101,24 +122,24 @@ export default function Modal({ open, control }) {
                 }
               >
                 Send Message
-              </button> */}
-              <button
+              </button>
+              {/* <button
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 cursor-pointer"
                  
               >
                 Send Message
-              </button>
+              </button> */}
             </div>
 
             {participant?.length === 0 && (
               <Error message="This user does not exist" />
             )}
-            {/* {participant?.length > 0 &&
+              {participant?.length > 0 &&
               participant[0].email === loggedInUserEmail && (
                 <Error message="You can not send message to yourself" />
-              )} */}
-            {/* {responseError && <Error message={responseError} />} */}
+              )} 
+            {responseError && <Error message={responseError} />}
           </form>
         </div>
       </>
