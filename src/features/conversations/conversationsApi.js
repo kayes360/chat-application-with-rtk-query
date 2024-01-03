@@ -22,23 +22,26 @@ export const conversationsApi = apiSlice.injectEndpoints({
       //silet add to message table
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         //optimistic cache update start
-        const patchResultAddConversation= dispatch(
+        const patchResultAddConversation = dispatch(
           apiSlice.util.updateQueryData(
             "getConversations",
             arg.sender,
-            (draft) => {draft.push(arg.data)}
+            (draft) => {
+              draft.push(arg.data);
+            }
           )
         );
         //optimistic cache update end
         try {
-          
           const conversation = await queryFulfilled;
           if (conversation?.data?.id) {
             //silent entry to message table
             const users = arg.data.users;
             const senderUser = users.find((user) => user.email === arg.sender);
-            const receiverUser = users.find((user) => user.email !== arg.sender);
-  
+            const receiverUser = users.find(
+              (user) => user.email !== arg.sender
+            );
+
             dispatch(
               messagesApi.endpoints.addMessage.initiate({
                 conversationId: conversation?.data?.id,
@@ -50,7 +53,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
             );
           }
         } catch (error) {
-          patchResultAddConversation.undo()
+          patchResultAddConversation.undo();
         }
       },
     }),
@@ -63,7 +66,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
       //silet edit to message table
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         //optimistic cache update start
-        const patchResultEditConversation= dispatch(
+        const patchResultEditConversation = dispatch(
           apiSlice.util.updateQueryData(
             "getConversations",
             arg.sender,
@@ -75,29 +78,43 @@ export const conversationsApi = apiSlice.injectEndpoints({
           )
         );
         //optimistic cache update end
-            try { 
-              const conversation = await queryFulfilled;
-              if (conversation?.data?.id) {
-                //silent entry to message table
-                const users = arg.data.users;
-                const senderUser = users.find((user) => user.email === arg.sender);
-                const receiverUser = users.find((user) => user.email !== arg.sender);
-      
+        try {
+          const conversation = await queryFulfilled;
+          if (conversation?.data?.id) {
+            //silent entry to message table
+            const users = arg.data.users;
+            const senderUser = users.find((user) => user.email === arg.sender);
+            const receiverUser = users.find(
+              (user) => user.email !== arg.sender
+            );
+
+            const res = await dispatch(
+              messagesApi.endpoints.addMessage.initiate({
+                conversationId: conversation?.data?.id,
+                sender: senderUser,
+                receiver: receiverUser,
+                message: arg.data.message,
+                timestamp: arg.data.timestamp,
+              })
+            ).unwrap();
+
+            console.log("res", res)
+              //update message pessimistically start
                 dispatch(
-                  messagesApi.endpoints.addMessage.initiate({
-                    conversationId: conversation?.data?.id,
-                    sender: senderUser,
-                    receiver: receiverUser,
-                    message: arg.data.message,
-                    timestamp: arg.data.timestamp,
-                  })
+                  apiSlice.util.updateQueryData(
+                    "getMessages",
+                    res.conversationId.toString(),
+                    (draft) => {
+                       draft.push(res)
+                    }
+                  )
                 );
-              }
-            } catch (err) {
-              patchResultEditConversation.undo()
-            }
+              //update message pessimistically end
 
-
+          }
+        } catch (err) {
+          patchResultEditConversation.undo();
+        }
       },
     }),
   }),
