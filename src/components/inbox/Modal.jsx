@@ -80,9 +80,10 @@ export default function Modal({ open, control }) {
       //edit transaction
       editConversation({
         id: conversation[0].id,
+        sender: loggedInUserEmail, 
         data: {
           participants: `${loggedInUserEmail}-${participant[0].email}`,
-          users: [loggedInUserEmail, participant[0]],
+          users: [loggedInUser, participant[0]],
           message,
           timestamp: new Date().getTime(),
         },
@@ -90,10 +91,13 @@ export default function Modal({ open, control }) {
     } else if (conversation?.length === 0) {
       //add transaction
       addConversation({
-        participants: `${loggedInUserEmail}-${participant[0].email}`,
-        users: [loggedInUserEmail, participant[0]],
-        message,
-        timestamp: new Date().getTime(),
+        sender: loggedInUserEmail,
+        data: { 
+          participants: `${loggedInUserEmail}-${participant[0].email}`,
+          users: [loggedInUser, participant[0]],
+          message,
+          timestamp: new Date().getTime(),
+        }
       });
     }
   };
