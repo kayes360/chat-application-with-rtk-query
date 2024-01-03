@@ -39,46 +39,13 @@
   ],
   "conversations": [
     {
-      "id": 1,
-      "participants": "sumit@learnwithsumit.com-akash@learnwithsumit.com",
-      "users": [
-        {
-          "email": "sumit@learnwithsumit.com",
-          "name": "Sumit Saha",
-          "id": 1
-        },
-        {
-          "email": "akash@learnwithsumit.com",
-          "name": "Akash Ahmed",
-          "id": 2
-        }
-      ],
-      "message": "How are you?",
-      "timestamp": 1661976143678
-    },
-    {
-      "id": 2,
-      "participants": "sumit@learnwithsumit.com-saad@learnwithsumit.com",
-      "users": [
-        {
-          "email": "sumit@learnwithsumit.com",
-          "name": "Sumit Saha",
-          "id": 1
-        },
-        {
-          "email": "saad@learnwithsumit.com",
-          "name": "Saad Hasan",
-          "id": 3
-        }
-      ],
-      "message": "How are you?",
-      "timestamp": 1661976143678
-    },
-    {
-      "id": 3,
       "participants": "b@b.com-a@a.com",
       "users": [
-        "b@b.com",
+        {
+          "email": "b@b.com",
+          "name": "b",
+          "id": 5
+        },
         {
           "email": "a@a.com",
           "password": "$2a$10$7rJgm.zJ31gCbqWOWNEj1.9MTlrMm8mYKoisrk408.EaZyFfVNoWO",
@@ -86,13 +53,18 @@
           "id": 4
         }
       ],
-      "message": "hello a",
-      "timestamp": 1704140315031
+      "message": "sd",
+      "timestamp": 1704303364488,
+      "id": 1
     },
     {
       "participants": "b@b.com-c@c.com",
       "users": [
-        "b@b.com",
+        {
+          "email": "b@b.com",
+          "name": "b",
+          "id": 5
+        },
         {
           "email": "c@c.com",
           "password": "$2a$10$iVxKrSMMKsCW9DyuxLBIrOpYtgwJvjkW51SnPQunnUykR/jqKWipK",
@@ -100,63 +72,48 @@
           "id": 6
         }
       ],
-      "message": "new msg",
-      "timestamp": 1704140653102,
-      "id": 4
+      "message": "cwq",
+      "timestamp": 1704303353407,
+      "id": 2
     }
   ],
   "messages": [
     {
-      "id": 1,
       "conversationId": 1,
       "sender": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "Sumit Saha",
-        "id": 1
+        "email": "b@b.com",
+        "name": "b",
+        "id": 5
       },
       "receiver": {
-        "email": "akash@learnwithsumit.com",
-        "name": "Akash Ahmed",
-        "id": 2
+        "email": "a@a.com",
+        "password": "$2a$10$7rJgm.zJ31gCbqWOWNEj1.9MTlrMm8mYKoisrk408.EaZyFfVNoWO",
+        "name": "a",
+        "id": 4
       },
-      "message": "Hello",
-      "timestamp": 1661976143557
+      "message": "awq",
+      "timestamp": 1704297133318,
+      "id": 1
     },
     {
-      "id": 2,
       "conversationId": 2,
       "sender": {
-        "email": "akash@learnwithsumit.com",
-        "name": "Akash Ahmed",
-        "id": 2
-      },
-      "receiver": {
-        "email": "sumit@learnwithsumit.com",
-        "name": "Sumit Saha",
-        "id": 1
-      },
-      "message": "How are you?",
-      "timestamp": 1661976143678
-    },
-    {
-      "id": 3,
-      "conversationId": 3,
-      "sender": {
-        "email": "a@a.com",
-        "name": "a",
-        "id": 4
-      },
-      "receiver": {
         "email": "b@b.com",
         "name": "b",
         "id": 5
       },
-      "message": "Hey there!",
-      "timestamp": 1661976144000
+      "receiver": {
+        "email": "c@c.com",
+        "password": "$2a$10$iVxKrSMMKsCW9DyuxLBIrOpYtgwJvjkW51SnPQunnUykR/jqKWipK",
+        "name": "Eaton Washington",
+        "id": 6
+      },
+      "message": "cwq",
+      "timestamp": 1704303353407,
+      "id": 2
     },
     {
-      "id": 4,
-      "conversationId": 4,
+      "conversationId": 1,
       "sender": {
         "email": "b@b.com",
         "name": "b",
@@ -164,11 +121,13 @@
       },
       "receiver": {
         "email": "a@a.com",
+        "password": "$2a$10$7rJgm.zJ31gCbqWOWNEj1.9MTlrMm8mYKoisrk408.EaZyFfVNoWO",
         "name": "a",
         "id": 4
       },
-      "message": "How's it going?",
-      "timestamp": 1661976144200
+      "message": "sd",
+      "timestamp": 1704303364488,
+      "id": 3
     }
   ]
 }

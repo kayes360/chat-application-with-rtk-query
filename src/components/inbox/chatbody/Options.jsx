@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useEditConversationMutation } from "../../../features/conversations/conversationsApi";
 import { useDispatch, useSelector } from "react-redux";
-export default function Options({ message }) {
-  console.log("options message", message);
+export default function Options({ message }) { 
   const [newMessage, setNewMessage] = useState("");
 
   const [editConversation, { isSuccess: isEditConversationSuccess }] =
